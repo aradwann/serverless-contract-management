@@ -1,6 +1,6 @@
 export default interface Contract {
   contractId: string,
-  Name: string,
+  name: string,
   templateId: string,
   userId: string
 }

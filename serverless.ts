@@ -1,11 +1,11 @@
 import type { AWS } from '@serverless/typescript';
 
 import hello from '@functions/hello';
-//import { createContract, getContractIDs, getContract } from '@functions/contract'
+import { createContract, getAllContracts, getContract } from '@functions/contract'
 const serverlessConfiguration: AWS = {
   service: 'contracts-management',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dynamodb-local'],
+  plugins: ['serverless-esbuild', 'serverless-dynamodb-local', 'serverless-offline',],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -26,7 +26,8 @@ const serverlessConfiguration: AWS = {
             "dynamodb:Query",
             "dynamodb:Scan",
             "dynamodb:GetItem",
-            "dynamodb:DeleteItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
           ],
           Resource: "arn:aws:dynamodb:us-west-2:*:table/ContractsTable",
         }],
@@ -34,7 +35,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { hello, },// createContract, getContractIDs, getContract },
+  functions: { hello, createContract, getContract, getAllContracts },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -53,34 +54,34 @@ const serverlessConfiguration: AWS = {
         inMemory: true,
         migrate: true,
       },
-      stages: "dev"
-    },
-    resources: {
-      Resources: {
-        TodosTable: {
-          Type: "AWS::DynamoDB::Table",
-          Properties: {
-            TableName: "ContractsTable",
-            AttributeDefinitions: [{
-              AttributeName: "contractId",
-              AttributeType: "S",
-            },
-            ],
-            KeySchema: [{
-              AttributeName: "contractId",
-              KeyType: "HASH"
-            },
-            ],
-            ProvisionedThroughput: {
-              ReadCapacityUnits: 1,
-              WriteCapacityUnits: 1
-            },
+      stages: "dev",
+    }
+  },
 
-          }
+  resources: {
+    Resources: {
+      ContractsTable: {
+        Type: "AWS::DynamoDB::Table",
+        Properties: {
+          TableName: "ContractsTable",
+          AttributeDefinitions: [{
+            AttributeName: "contractId",
+            AttributeType: "S",
+          },
+          ],
+          KeySchema: [{
+            AttributeName: "contractId",
+            KeyType: "HASH"
+          },
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1
+          },
         }
       }
-    },
-  }
+    }
+  },
 };
 
 module.exports = serverlessConfiguration;
