@@ -1,5 +1,8 @@
 import { dynamoDBClient } from '../models/database'
 import ContractService from './contractService'
+import AuthService from './authService'
 
-export const contractService = new ContractService(dynamoDBClient());
+const DDBClient = dynamoDBClient()
+export const contractService = new ContractService(DDBClient);
+export const authService = new AuthService(DDBClient);
 
