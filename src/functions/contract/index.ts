@@ -1,7 +1,7 @@
 import { handlerPath } from '@libs/handler-resolver';
 import schema from './schema';
-export const getAllContracts = {
-  handler: `${handlerPath(__dirname)}/handler.getAllContracts`,
+export const getAllContractIds = {
+  handler: `${handlerPath(__dirname)}/handler.getAllContractIds`,
   events: [
     {
       http: {

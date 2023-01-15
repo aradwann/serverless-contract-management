@@ -28,9 +28,10 @@ export default class ContractService {
     return contract.Item as Contract;
 
   }
-  async getAllContracts(): Promise<Contract[]> {
+  async getAllContractIds(): Promise<Contract[]> {
     const contracts = await this.docClient.scan({
-      TableName: this.TableName
+      TableName: this.TableName,
+      AttributesToGet: ['contractId']
     }).promise()
 
     return contracts.Items as Contract[]

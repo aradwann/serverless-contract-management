@@ -5,8 +5,8 @@ import { v4 } from "uuid";
 import { contractService } from '../../services/index'
 import createContractSchema from "./schema";
 
-export const getAllContracts = middyfy(async (): Promise<APIGatewayProxyResult> => {
-  const contracts = await contractService.getAllContracts();
+export const getAllContractIds = middyfy(async (): Promise<APIGatewayProxyResult> => {
+  const contracts = await contractService.getAllContractIds();
   return formatJSONResponse({
     contracts
   })
@@ -15,14 +15,14 @@ export const getAllContracts = middyfy(async (): Promise<APIGatewayProxyResult> 
 const createContractHandler: ValidatedEventAPIGatewayProxyEvent<typeof createContractSchema> = async (event) => {
   try {
     const id = v4();
-    const contract = await contractService.createContract({
+    await contractService.createContract({
       contractId: id,
       name: event.body.name,
       templateId: event.body.templateId,
       userId: event.body.userId
     })
     return formatJSONResponse({
-      contract
+      contractId: id
     });
   } catch (e) {
     return formatJSONResponse({
@@ -39,7 +39,7 @@ export const getContract = middyfy(async (event: APIGatewayProxyEvent): Promise<
   try {
     const contract = await contractService.getContract(id)
     return formatJSONResponse({
-      contract, id
+      ...contract
     });
   } catch (e) {
     return formatJSONResponse({
