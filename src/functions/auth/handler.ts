@@ -6,17 +6,14 @@ import loginSchema from "./schema";
 
 const registerHandler: ValidatedEventAPIGatewayProxyEvent<typeof loginSchema> = async (event) => {
   try {
-    const res = await authService.register({
-      username: event.body.username,
-      password: event.body.password,
-    })
+    const res = await authService.register(event.body.username, event.body.password)
     return formatJSONResponse({
       res
     });
   } catch (e) {
     return formatJSONResponse({
       status: 500,
-      message: e
+      message: e.message
     })
   }
 }
@@ -25,17 +22,14 @@ export const register = middyfy(registerHandler);
 
 const loginHandler: ValidatedEventAPIGatewayProxyEvent<typeof loginSchema> = async (event) => {
   try {
-    const token = await authService.login({
-      username: event.body.username,
-      password: event.body.password,
-    })
+    const token = await authService.login(event.body.username, event.body.password)
     return formatJSONResponse({
       token
     });
   } catch (e) {
     return formatJSONResponse({
       status: 500,
-      message: e
+      message: e.message
     })
   }
 }

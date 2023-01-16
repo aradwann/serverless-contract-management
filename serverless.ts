@@ -87,12 +87,12 @@ const serverlessConfiguration: AWS = {
         Properties: {
           TableName: "UsersTable",
           AttributeDefinitions: [{
-            AttributeName: "username",
+            AttributeName: "userId",
             AttributeType: "S",
           },
           ],
           KeySchema: [{
-            AttributeName: "username",
+            AttributeName: "userId",
             KeyType: "HASH"
           },
           ],
@@ -100,6 +100,7 @@ const serverlessConfiguration: AWS = {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1
           },
+
         }
       }
     }

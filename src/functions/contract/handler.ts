@@ -27,7 +27,7 @@ const createContractHandler: ValidatedEventAPIGatewayProxyEvent<typeof createCon
   } catch (e) {
     return formatJSONResponse({
       status: 500,
-      message: e
+      message: e.message
     })
   }
 }
@@ -44,7 +44,7 @@ export const getContract = middyfy(async (event: APIGatewayProxyEvent): Promise<
   } catch (e) {
     return formatJSONResponse({
       status: 500,
-      message: e
+      message: e.message
     });
   }
 })
