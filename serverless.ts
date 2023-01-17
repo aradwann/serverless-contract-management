@@ -7,7 +7,7 @@ import { register, login, authorizerFunc } from '@functions/auth'
 const serverlessConfiguration: AWS = {
   service: 'contracts-management',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-dynamodb-local', 'serverless-offline',],
+  plugins: ['serverless-esbuild', 'serverless-dynamodb-local', 'serverless-offline',], // TODO: use openapi plugin to generate a nice interface page
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -16,6 +16,7 @@ const serverlessConfiguration: AWS = {
       shouldStartNameWithService: true,
     },
     httpApi: {
+      // TODO user authorizer
       // there is an open issue with serverless-offline plugin: https://github.com/dherault/serverless-offline/issues/1624
       // so custom authorizers won't be loaded for offline use
       // authorizers: {
