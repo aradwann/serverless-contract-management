@@ -1,8 +1,8 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import { hello } from '@functions/hello';
 import { createContract, getAllContractIds, getContract } from '@functions/contract'
-import { register, login } from '@functions/auth'
+import { register, login, authorizerFunc } from '@functions/auth'
 
 const serverlessConfiguration: AWS = {
   service: 'contracts-management',
@@ -14,6 +14,21 @@ const serverlessConfiguration: AWS = {
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
+    },
+    httpApi: {
+      // there is an open issue with serverless-offline plugin: https://github.com/dherault/serverless-offline/issues/1624
+      // so custom authorizers won't be loaded for offline use
+      // authorizers: {
+      //   customAuthorizer: {
+      //     type: 'request',
+      //     functionName: "authorizerFunc",
+      //     enableSimpleResponses: true,
+      //     payloadVersion: '2.0',
+      //     AuthorizerPayloadFormatVersion: '2.0',
+      //     identitySource: '$request.header.Authorization',
+      //     managedExternally: true
+      //   }
+      // }
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
@@ -37,7 +52,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { register, login, hello, createContract, getContract, getAllContractIds },
+  functions: { authorizerFunc, register, login, hello, createContract, getContract, getAllContractIds },
   package: { individually: true },
   custom: {
     esbuild: {

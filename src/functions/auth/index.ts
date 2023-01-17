@@ -35,3 +35,7 @@ export const login = {
   ],
 };
 
+export const authorizerFunc = {
+  handler: `${handlerPath(__dirname)}/handler.authorize`,
+  
+};

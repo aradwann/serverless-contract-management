@@ -8,6 +8,9 @@ import { v4 } from "uuid";
 export default class AuthService {
   private TableName = "UsersTable"
 
+  // TODO: configure env secret
+  private JWT_SECRET = "some-temporary-secret-for-dev-only";
+
   constructor(private docClient: DocumentClient) { }
 
   async register(username: string, password: string) {
@@ -36,6 +39,11 @@ export default class AuthService {
     }
     return await this.comparePassword(password, user.password, user.userId)
 
+  }
+
+  authorize(token: string) {
+    jwt.verify(token, this.JWT_SECRET)
+    return false
   }
 
 
@@ -86,11 +94,14 @@ export default class AuthService {
 
   }
 
-  // TODO: configure secret
   private signToken(userId: string) {
-    return jwt.sign({ userId }, "some-temporary-secret-for-dev-only", {
+    // TODO: configure env secret
+
+    return jwt.sign({ userId }, this.JWT_SECRET, {
       expiresIn: 86400 // expires in 24 hours
     });
   }
+
+
 
 }
