@@ -1,7 +1,7 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import User from "../models/user";
 import * as jwt from 'jsonwebtoken';
-// import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { v4 } from "uuid";
 
 
@@ -20,14 +20,14 @@ export default class AuthService {
       throw new Error('User with that username already exists')
     }
 
-    // TODO: hash password, there is an issue with bcrypt dependecies/ library
-    // const hash = bcrypt.hashSync(eventBody.password, 10);
+    const hash = bcrypt.hashSync(password, 10);
     const id = v4();
-    const newUser: User = { userId: id, username: username, password: password }
+    const newUser: User = { userId: id, username: username, password: hash }
     await this.docClient.put({
       TableName: this.TableName,
       Item: newUser
     }).promise();
+    console.log({ newUser })
     return id
   }
 
@@ -87,8 +87,8 @@ export default class AuthService {
   }
 
   private async comparePassword(eventPassword: string, userPassword: string, userId: string) {
-    // const isValid = await bcrypt.compare(eventPassword, userPassword)
-    const isValid = eventPassword === userPassword
+    const isValid = await bcrypt.compare(eventPassword, userPassword)
+
     if (!isValid) throw new Error('The credentials do not match.')
     return this.signToken(userId)
 
@@ -101,7 +101,5 @@ export default class AuthService {
       expiresIn: 86400 // expires in 24 hours
     });
   }
-
-
 
 }

@@ -7,9 +7,9 @@ import loginSchema from "./schema";
 
 const registerHandler: ValidatedEventAPIGatewayProxyEvent<typeof loginSchema> = async (event) => {
   try {
-    const res = await authService.register(event.body.username, event.body.password)
+    const userId = await authService.register(event.body.username, event.body.password)
     return formatJSONResponse({
-      res
+      userId
     });
   } catch (e) {
     return formatJSONResponse({
