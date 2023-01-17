@@ -42,8 +42,12 @@ export default class AuthService {
   }
 
   authorize(token: string) {
-    jwt.verify(token, this.JWT_SECRET)
-    return false
+    
+    const { userId } = jwt.verify(token, this.JWT_SECRET) as jwt.JwtPayload
+    if (!userId) {
+      throw new Error("unauthorized")
+    }
+    return userId
   }
 
 
