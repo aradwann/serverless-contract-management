@@ -1,6 +1,4 @@
 import type { AWS } from '@serverless/typescript';
-
-import { hello } from '@functions/hello';
 import { createContract, getAllContractIds, getContract } from '@functions/contract'
 import { register, login, authorizerFunc } from '@functions/auth'
 
@@ -53,7 +51,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { authorizerFunc, register, login, hello, createContract, getContract, getAllContractIds },
+  functions: { authorizerFunc, register, login, createContract, getContract, getAllContractIds },
   package: { individually: true },
   custom: {
     esbuild: {

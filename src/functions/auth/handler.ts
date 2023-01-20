@@ -7,6 +7,7 @@ import loginSchema from "./schema";
 
 const registerHandler: ValidatedEventAPIGatewayProxyEvent<typeof loginSchema> = async (event) => {
   try {
+    console.log(process.env)
     const userId = await authService.register(event.body.username, event.body.password)
     return formatJSONResponse({
       userId
