@@ -1,5 +1,7 @@
 # Serverless Contract Management API - AWS Node.js Typescript
 
+![Nodejs workflow](https://github.com/github/aradwann/actions/workflows/nodejs.yml/badge.svg)
+
 This project is a demo for simple serverless contract management API which revloves aroud two resources
 
 ```Typescript
@@ -35,12 +37,15 @@ Depending on your preferred package manager, follow the instructions below to de
 - Run `npm i` to install the project dependencies
 - Run `sls dynamodb install` to install dynamodb locally
 - Run `sls offline start` to run the project locally
-- Run `npm test` to run ***unit tests***
 - Run `sls deploy` to deploy this stack to AWS
 
+## Testing 
+### Unit Tests
+- Run `npm test` to run ***unit tests***
 
-## Testing Locally 
-
+### Testing Locally 
+> note: there is [insomnia collection](Insomnia-collection.json) that can be imported by [insomnia REST client](https://insomnia.rest/) to test the API 
+> 
 This Project contains a single lambda function triggered by an HTTP request made on the provisioned API Gateway REST API `/contracts` and `/auth` routes. The request body must be provided as `application/json`. The body structure is tested by API Gateway against `src/functions/{function}/schema.ts` JSON-Schema definition: it must contain the requierd properties.
 
 below I am going to describe  a simple flow 
