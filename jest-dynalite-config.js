@@ -16,6 +16,23 @@ module.exports = {
                 },
             ],
         },
+        {
+            TableName: "ContractsTable",
+            KeySchema: [{ AttributeName: "contractId", KeyType: "HASH" }],
+            AttributeDefinitions: [{ AttributeName: "contractId", AttributeType: "S" }],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: 1,
+                WriteCapacityUnits: 1,
+            },
+            data: [
+                {
+                    contractId: '1ccc6342-096a-4398-9ce6-f71a558b4b30',
+                    name: "test contract name",
+                    templateId: "a34823c4-e074-4e67-bedd-6f39402f4edf",
+                    userId: "a34823c4-e074-4e67-bedd-6f39402f4edf"
+                },
+            ],
+        },
     ],
     basePort: 8000,
 };
