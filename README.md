@@ -34,8 +34,8 @@ Depending on your preferred package manager, follow the instructions below to de
 
 - Run `npm i` to install the project dependencies
 - Run `sls dynamodb install` to install dynamodb locally
-- Run `serverless offline start` to run the project locally
-- Run `npx sls deploy` to deploy this stack to AWS
+- Run `sls offline start` to run the project locally
+- Run `sls deploy` to deploy this stack to AWS
 
 
 ## Testing Locally 
