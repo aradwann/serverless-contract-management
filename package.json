@@ -4,7 +4,8 @@
   "description": "Serverless aws-nodejs-typescript simple contract management API",
   "main": "serverless.ts",
   "scripts": {
-    "test": "npx jest"
+    "test": "jest",
+    "test:cov": "jest --coverage"
   },
   "engines": {
     "node": ">=14.15.0"

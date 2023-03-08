@@ -1,7 +1,7 @@
 # Serverless Contract Management API - AWS Node.js Typescript
 
 ![Nodejs workflow](https://github.com/aradwann/serverless-contract-management/actions/workflows/node.js.yml/badge.svg)
-
+[![Coverage Status](https://coveralls.io/repos/github/aradwann/serverless-contract-management/badge.svg?branch=main)](https://coveralls.io/github/aradwann/serverless-contract-management?branch=main)
 
 This project is a demo for simple serverless contract management API which revloves aroud two resources
 
